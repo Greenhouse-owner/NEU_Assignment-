@@ -15,6 +15,21 @@ public class CreatePersonPanel extends javax.swing.JPanel {
      */
     public CreatePersonPanel() {
         initComponents();
+        
+       
+        if (MainFrame.homeAddressList.isEmpty() || 
+            MainFrame.localAddressList.isEmpty() || 
+            MainFrame.bankAccountList.isEmpty()) {
+            
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                "Please create the home address, local address and bank account first!\n" +
+                "Current status:\n" +
+                "Home address: " + MainFrame.homeAddressList.size() + "entries\n" +
+                "Local address: " + MainFrame.localAddressList.size() + "entries\n" +
+                "Bank account: " + MainFrame.bankAccountList.size() + "entries", 
+                "Warning", 
+                javax.swing.JOptionPane.WARNING_MESSAGE);
+        }
     }
 
     /**
@@ -115,7 +130,86 @@ public class CreatePersonPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_fieldAgeActionPerformed
 
     private void btnsaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsaveActionPerformed
-        // TODO add your handling code here:
+        //  Step 1: Obtain basic information 
+        String firstName = fieldFirstName.getText().trim();
+        String lastName = fieldLastName.getText().trim();
+        String ageStr = fieldAge.getText().trim();
+        String maritalStatusStr = fieldMaritalstatus.getText().trim();
+        
+        //  Step 2: Verify basic information
+        if (firstName.isEmpty() || lastName.isEmpty() || ageStr.isEmpty() || maritalStatusStr.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                "All fields are required!", 
+                "Input error!", 
+                javax.swing.JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+    
+        
+        // Verify marital status input 
+        boolean isMarried;
+        if (maritalStatusStr.equalsIgnoreCase("married") || 
+            maritalStatusStr.equalsIgnoreCase("yes")) {
+            isMarried = true;
+        } else if (maritalStatusStr.equalsIgnoreCase("single") ||
+                   maritalStatusStr.equalsIgnoreCase("no")) {
+            isMarried = false;
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                "Please enter marital status: Married/Single ", 
+                "Input error", 
+                javax.swing.JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        // Step 3: Check for available associated objects
+        if (MainFrame.homeAddressList.isEmpty() || 
+            MainFrame.localAddressList.isEmpty() || 
+            MainFrame.bankAccountList.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                "Please create the home address, local address and bank account first!", 
+                "Unable to save!", 
+                javax.swing.JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        // Step 4: Create a Person object and set basic attributes
+        model.Person person = new model.Person();
+        person.setFirstName(firstName);
+        person.setLastName(lastName);
+        person.setMarried(isMarried);
+        
+        // Step 5: Automatically associate the first address and account
+        // Obtain the first home address
+        model.Address homeAddress = MainFrame.homeAddressList.get(0);
+        person.setHomeAddress(homeAddress);
+        
+        // Obtain the first local address
+        model.Address localAddress = MainFrame.localAddressList.get(0);
+        person.setLocalAddress(localAddress);
+        
+        // Obtain the first bank account
+        model.BankAccount bankAccount = MainFrame.bankAccountList.get(0);
+        person.setBankAccount(bankAccount);
+        
+        //Step 6: Save to the global list
+        MainFrame.personList.add(person);
+        
+        // Step 7: Clear the input boxes
+        fieldFirstName.setText("");
+        fieldLastName.setText("");
+        fieldAge.setText("");
+        fieldMaritalstatus.setText("");
+        
+        // Step 8: Prompt success
+        javax.swing.JOptionPane.showMessageDialog(this, 
+            "Personal information saved successfully!\n" +
+            "Automatically associated:\n" +
+            "- Home address: " + homeAddress.getCity() + "\n" +
+            "- Local address: " + localAddress.getCity() + "\n" +
+            "- Bank account: " + bankAccount.getBankName(), 
+            "Success", 
+            javax.swing.JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnsaveActionPerformed
 
 

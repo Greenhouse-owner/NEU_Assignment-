@@ -45,6 +45,7 @@ public class CreateLocalAddress extends javax.swing.JPanel {
         jLabel1.setText("Create Local Address");
 
         btnsave.setText("save");
+        btnsave.addActionListener(this::btnsaveActionPerformed);
 
         lblCountry.setText("Country");
 
@@ -120,6 +121,61 @@ public class CreateLocalAddress extends javax.swing.JPanel {
     private void fieldStreetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldStreetActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_fieldStreetActionPerformed
+
+    private void btnsaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsaveActionPerformed
+        // Step 1: Obtain input values
+        String country = fieldCountry.getText().trim();
+        String city = fieldCity.getText().trim();
+        String street = fieldStreet.getText().trim();
+        String postalCode = fieldPostalCode.getText().trim();
+        String houseNumberStr = fieldHouseNumber.getText().trim();
+        
+        // Step 2: Verify required fields
+        if (country.isEmpty() || city.isEmpty() || street.isEmpty() || 
+            postalCode.isEmpty() || houseNumberStr.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                "All fields are required. Please fill them out completely!", 
+                "Input error!", 
+                javax.swing.JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        // Step 3: Verify data type
+        int houseNumber;
+        try {
+            houseNumber = Integer.parseInt(houseNumberStr);
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                "House number must be a valid integer!", 
+                "Input error!", 
+                javax.swing.JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        // Step 4: Create object
+        model.Address address = new model.Address();
+        address.setCountry(country);
+        address.setCity(city);
+        address.setStreet(street);
+        address.setPostalCode(postalCode);
+        address.setHouseNumber(houseNumber);
+        
+        // Step 5: Save to the local address list
+        MainFrame.localAddressList.add(address);
+        
+        // Step 6: Clear the input boxes
+        fieldCountry.setText("");
+        fieldCity.setText("");
+        fieldStreet.setText("");
+        fieldPostalCode.setText("");
+        fieldHouseNumber.setText("");
+        
+            // 提示成功
+            javax.swing.JOptionPane.showMessageDialog(this, 
+            "Local address saved successfully!", 
+            "Success", 
+            javax.swing.JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_btnsaveActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

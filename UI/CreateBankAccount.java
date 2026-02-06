@@ -57,6 +57,7 @@ public class CreateBankAccount extends javax.swing.JPanel {
         fieldBranchName.addActionListener(this::fieldBranchNameActionPerformed);
 
         btnsave.setText("save");
+        btnsave.addActionListener(this::btnsaveActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -123,6 +124,73 @@ public class CreateBankAccount extends javax.swing.JPanel {
     private void fieldBranchNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldBranchNameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_fieldBranchNameActionPerformed
+
+    private void btnsaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsaveActionPerformed
+        // Step 1: Obtain input values
+        String accountNumberStr = fieldAccountNumber.getText().trim();
+        String bankName = fieldBankName.getText().trim();
+        String branchName = fieldBranchName.getText().trim();
+        String accountType = fieldAccountType.getText().trim();
+        String balanceStr = fieldBalance.getText().trim();
+        
+        // Step 2: Verify required fields
+        if (accountNumberStr.isEmpty() || bankName.isEmpty() || branchName.isEmpty() || 
+            accountType.isEmpty() || balanceStr.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                "All fields are required, please fill in completely!", 
+                "Input error!", 
+                javax.swing.JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        // Step 3: Verify data type
+        long accountNumber;
+        try {
+            accountNumber = Long.parseLong(accountNumberStr);
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                "Account number must be a valid number!", 
+                "Input error!", 
+                javax.swing.JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        // Step 4: Verify data type
+        double balance;
+        try {
+            balance = Double.parseDouble(balanceStr);
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                "Balance must be a valid number!", 
+                "Input error!", 
+                javax.swing.JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        // Step 5: Create object
+        model.BankAccount account = new model.BankAccount();
+        account.setAccountNumber(accountNumber);
+        account.setBankName(bankName);
+        account.setBranchName(branchName);
+        account.setAccountType(accountType);
+        account.setBalance(balance);
+        
+        // Step 6: Save to the global list
+        MainFrame.bankAccountList.add(account);
+        
+        // Step 7: Clear the input boxes
+        fieldAccountNumber.setText("");
+        fieldBankName.setText("");
+        fieldBranchName.setText("");
+        fieldAccountType.setText("");
+        fieldBalance.setText("");
+        
+        // Step 8: Prompt success
+        javax.swing.JOptionPane.showMessageDialog(this, 
+            "Bank account saved successfully!", 
+            "Success", 
+            javax.swing.JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_btnsaveActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -10,6 +10,12 @@ package UI;
  */
 public class MainFrame extends javax.swing.JFrame {
     
+    // 全局数据存储列表（静态，所有面板共享）
+    public static java.util.List<model.Person> personList = new java.util.ArrayList<>();
+    public static java.util.List<model.Address> homeAddressList = new java.util.ArrayList<>();
+    public static java.util.List<model.Address> localAddressList = new java.util.ArrayList<>();
+    public static java.util.List<model.BankAccount> bankAccountList = new java.util.ArrayList<>();
+    
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MainFrame.class.getName());
 
     /**
@@ -17,6 +23,77 @@ public class MainFrame extends javax.swing.JFrame {
      */
     public MainFrame() {
         initComponents();
+        
+        setupButtonListeners();
+    }
+    
+    /**
+     * Set event listeners for all buttons.
+     */
+    private void setupButtonListeners() {
+        // Create Person  button
+        btnCreatePerson.addActionListener(evt -> {
+            CreatePersonPanel panel = new CreatePersonPanel();
+            jSplitPane1.setRightComponent(panel);
+            jSplitPane1.revalidate();
+            jSplitPane1.repaint();
+        });
+        
+        // View Person  button
+        btnViewPerson.addActionListener(evt -> {
+            ViewPersonPanel panel = new ViewPersonPanel();
+            jSplitPane1.setRightComponent(panel);
+            jSplitPane1.revalidate();
+            jSplitPane1.repaint();
+        });
+        
+        // Create Home Address  button
+        btnCreateHomeAddress.addActionListener(evt -> {
+            CreateHomeAddress panel = new CreateHomeAddress();
+            jSplitPane1.setRightComponent(panel);
+            jSplitPane1.revalidate();
+            jSplitPane1.repaint();
+        });
+        
+        // View Home Address  button
+        btnViewHomeAddress.addActionListener(evt -> {
+            ViewHomeAddress panel = new ViewHomeAddress();
+            jSplitPane1.setRightComponent(panel);
+            jSplitPane1.revalidate();
+            jSplitPane1.repaint();
+        });
+        
+        // Create Local Address  button
+        btnCreateLocalAddress.addActionListener(evt -> {
+            CreateLocalAddress panel = new CreateLocalAddress();
+            jSplitPane1.setRightComponent(panel);
+            jSplitPane1.revalidate();
+            jSplitPane1.repaint();
+        });
+        
+        // View Local Address  button
+        btnViewLocalAddress.addActionListener(evt -> {
+            ViewLocalAddress panel = new ViewLocalAddress();
+            jSplitPane1.setRightComponent(panel);
+            jSplitPane1.revalidate();
+            jSplitPane1.repaint();
+        });
+        
+        // Create Bank Account  button
+        btnCreateBankAccount.addActionListener(evt -> {
+            CreateBankAccount panel = new CreateBankAccount();
+            jSplitPane1.setRightComponent(panel);
+            jSplitPane1.revalidate();
+            jSplitPane1.repaint();
+        });
+        
+        // View Bank Account  button
+        btnViewBankAccount.addActionListener(evt -> {
+            ViewBankAccount panel = new ViewBankAccount();
+            jSplitPane1.setRightComponent(panel);
+            jSplitPane1.revalidate();
+            jSplitPane1.repaint();
+        });
     }
 
     /**

@@ -15,6 +15,41 @@ public class ViewBankAccount extends javax.swing.JPanel {
      */
     public ViewBankAccount() {
         initComponents();
+        
+        loadData();
+    }
+    
+    /**
+     * 
+     */
+    private void loadData() {
+        if (MainFrame.bankAccountList.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                "No bank account data available. Please create it first!", 
+                "Tip", 
+                javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            
+            fieldAccountNumber.setText("");
+            fieldBankName.setText("");
+            fieldBranchName.setText("");
+            fieldAccountType.setText("");
+            fieldBalance.setText("");
+            return;
+        }
+        
+        model.BankAccount account = MainFrame.bankAccountList.get(0);
+        
+        fieldAccountNumber.setText(String.valueOf(account.getAccountNumber()));
+        fieldBankName.setText(account.getBankName());
+        fieldBranchName.setText(account.getBranchName());
+        fieldAccountType.setText(account.getAccountType());
+        fieldBalance.setText(String.valueOf(account.getBalance()));
+        
+        fieldAccountNumber.setEditable(false);
+        fieldBankName.setEditable(false);
+        fieldBranchName.setEditable(false);
+        fieldAccountType.setEditable(false);
+        fieldBalance.setEditable(false);
     }
 
     /**

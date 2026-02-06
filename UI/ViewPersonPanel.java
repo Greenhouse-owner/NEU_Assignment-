@@ -15,6 +15,106 @@ public class ViewPersonPanel extends javax.swing.JPanel {
      */
     public ViewPersonPanel() {
         initComponents();
+        
+        // 加载数据
+        loadData();
+    }
+    
+    /**
+     * 加载Person数据并展示关联信息
+     */
+    private void loadData() {
+        // ========== 第一步：检查列表是否为空 ==========
+        if (MainFrame.personList.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                "暂无个人信息数据，请先创建！", 
+                "提示", 
+                javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            
+            // 清空所有字段
+            clearAllFields();
+            return;
+        }
+        
+        // ========== 第二步：读取第一个Person对象 ==========
+        model.Person person = MainFrame.personList.get(0);
+        
+        // ========== 第三步：填充基本信息 ==========
+        fieldFirstName.setText(person.getFirstName());
+        fieldLastName.setText(person.getLastName());
+        fieldAge.setText(String.valueOf(person.getAge()));
+        fieldMaritalstatus.setText(person.isMarried() ? "已婚" : "未婚");
+        
+        // ========== 第四步：设置所有字段为只读 ==========
+        fieldFirstName.setEditable(false);
+        fieldLastName.setEditable(false);
+        fieldAge.setEditable(false);
+        fieldMaritalstatus.setEditable(false);
+        
+        // ========== 第五步：在控制台输出关联信息（用于验证1对1关联） ==========
+        System.out.println("\n========== 个人信息详情 ==========");
+        System.out.println("姓名: " + person.getLastName() + " " + person.getFirstName());
+        System.out.println("年龄: " + person.getAge());
+        System.out.println("婚姻状况: " + (person.isMarried() ? "已婚" : "未婚"));
+        
+        // 展示关联的家庭地址（1对1关联展示）
+        if (person.getHomeAddress() != null) {
+            System.out.println("\n家庭地址信息:");
+            System.out.println(person.getHomeAddress().toString());
+        } else {
+            System.out.println("\n家庭地址: 未关联");
+        }
+        
+        // 展示关联的本地地址（1对1关联展示）
+        if (person.getLocalAddress() != null) {
+            System.out.println("\n本地地址信息:");
+            System.out.println(person.getLocalAddress().toString());
+        } else {
+            System.out.println("\n本地地址: 未关联");
+        }
+        
+        // 展示关联的银行账户（1对1关联展示）
+        if (person.getBankAccount() != null) {
+            System.out.println("\n银行账户信息:");
+            System.out.println(person.getBankAccount().toString());
+        } else {
+            System.out.println("\n银行账户: 未关联");
+        }
+        
+        System.out.println("================================\n");
+        
+        // ========== 第六步：弹窗显示完整信息（包含关联对象） ==========
+        StringBuilder message = new StringBuilder();
+        message.append("姓名: ").append(person.getLastName()).append(" ").append(person.getFirstName()).append("\n");
+        message.append("年龄: ").append(person.getAge()).append("\n");
+        message.append("婚姻状况: ").append(person.isMarried() ? "已婚" : "未婚").append("\n\n");
+        
+        if (person.getHomeAddress() != null) {
+            message.append("家庭地址:\n").append(person.getHomeAddress().toString()).append("\n\n");
+        }
+        
+        if (person.getLocalAddress() != null) {
+            message.append("本地地址:\n").append(person.getLocalAddress().toString()).append("\n\n");
+        }
+        
+        if (person.getBankAccount() != null) {
+            message.append("银行账户:\n").append(person.getBankAccount().toString());
+        }
+        
+        javax.swing.JOptionPane.showMessageDialog(this, 
+            message.toString(), 
+            "个人信息详情（含关联信息）", 
+            javax.swing.JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    /**
+     * 清空所有字段
+     */
+    private void clearAllFields() {
+        fieldFirstName.setText("");
+        fieldLastName.setText("");
+        fieldAge.setText("");
+        fieldMaritalstatus.setText("");
     }
 
     /**

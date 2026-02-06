@@ -15,6 +15,46 @@ public class ViewHomeAddress extends javax.swing.JPanel {
      */
     public ViewHomeAddress() {
         initComponents();
+        
+        loadData();
+    }
+    
+    /**
+     * 
+     */
+    private void loadData() {
+        
+        if (MainFrame.homeAddressList.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                "No home address data available. Please create it first!", 
+                "Tip", 
+                javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            
+            
+            fieldCountry.setText("");
+            fieldCity.setText("");
+            fieldStreet.setText("");
+            fieldPostalCode.setText("");
+            fieldHouseNumber.setText("");
+            return;
+        }
+        
+        
+        model.Address address = MainFrame.homeAddressList.get(0);
+        
+        
+        fieldCountry.setText(address.getCountry());
+        fieldCity.setText(address.getCity());
+        fieldStreet.setText(address.getStreet());
+        fieldPostalCode.setText(address.getPostalCode());
+        fieldHouseNumber.setText(String.valueOf(address.getHouseNumber()));
+        
+        
+        fieldCountry.setEditable(false);
+        fieldCity.setEditable(false);
+        fieldStreet.setEditable(false);
+        fieldPostalCode.setEditable(false);
+        fieldHouseNumber.setEditable(false);
     }
 
     /**
