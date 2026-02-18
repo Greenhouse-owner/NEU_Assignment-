@@ -36,7 +36,11 @@ public class PersonDirectory {
                 return p;
             }
         }
-            return null; //not found after going through the whole list
+            return null;
          }
+
+    public ArrayList<Person> getPersonList() {
+        return personlist;
+    }
     
 }
