@@ -41,7 +41,11 @@ public class EmployeeDirectory {
                 return sp;
             }
         }
-            return null; //not found after going through the whole list
+            return null;
          }
+
+    public ArrayList<EmployeeProfile> getEmployeeList() {
+        return employeelist;
+    }
     
 }
