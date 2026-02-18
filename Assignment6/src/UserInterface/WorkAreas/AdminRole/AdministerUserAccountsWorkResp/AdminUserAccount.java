@@ -7,6 +7,8 @@ package UserInterface.WorkAreas.AdminRole.AdministerUserAccountsWorkResp;
 
 import Business.UserAccounts.UserAccount;
 import javax.swing.JPanel;
+import javax.swing.JOptionPane;
+import java.text.SimpleDateFormat;
 
 /**
  *h
@@ -27,8 +29,24 @@ public class AdminUserAccount extends javax.swing.JPanel {
         CardSequencePanel = jp;
         selecteduseraccount= sua;
         initComponents();
-        //display user details here
+        populateData();
 
+    }
+
+    private void populateData() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        
+        UsernameTextField.setText(selecteduseraccount.getUserLoginName());
+        NameLabel.setText(selecteduseraccount.getPersonId());
+        RoleLabel.setText(selecteduseraccount.getRole());
+        
+        if (selecteduseraccount.getLastAccessTime() != null) {
+            LastAccessLabel.setText(sdf.format(selecteduseraccount.getLastAccessTime()));
+        }
+        
+        if (selecteduseraccount.getLastUpdatedTime() != null) {
+            LastUpdatedLabel.setText(sdf.format(selecteduseraccount.getLastUpdatedTime()));
+        }
     }
 
     /**
@@ -43,6 +61,19 @@ public class AdminUserAccount extends javax.swing.JPanel {
         Back = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         Back1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        UsernameTextField = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        PasswordTextField = new javax.swing.JPasswordField();
+        jLabel4 = new javax.swing.JLabel();
+        NameLabel = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        RoleLabel = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        LastAccessLabel = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        LastUpdatedLabel = new javax.swing.JLabel();
+        DeleteButton = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(0, 153, 153));
         setLayout(null);
@@ -54,7 +85,7 @@ public class AdminUserAccount extends javax.swing.JPanel {
             }
         });
         add(Back);
-        Back.setBounds(480, 290, 100, 32);
+        Back.setBounds(370, 350, 100, 32);
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         jLabel2.setText("Administer User Account");
@@ -68,11 +99,82 @@ public class AdminUserAccount extends javax.swing.JPanel {
             }
         });
         add(Back1);
-        Back1.setBounds(40, 290, 100, 32);
+        Back1.setBounds(40, 350, 100, 32);
+
+        jLabel1.setText("Username:");
+        add(jLabel1);
+        jLabel1.setBounds(40, 80, 100, 16);
+        add(UsernameTextField);
+        UsernameTextField.setBounds(150, 80, 200, 30);
+
+        jLabel3.setText("New Password:");
+        add(jLabel3);
+        jLabel3.setBounds(40, 120, 100, 16);
+        add(PasswordTextField);
+        PasswordTextField.setBounds(150, 120, 200, 30);
+
+        jLabel4.setText("Name:");
+        add(jLabel4);
+        jLabel4.setBounds(40, 170, 100, 16);
+
+        NameLabel.setText("-");
+        add(NameLabel);
+        NameLabel.setBounds(150, 170, 200, 16);
+
+        jLabel5.setText("Role:");
+        add(jLabel5);
+        jLabel5.setBounds(40, 200, 100, 16);
+
+        RoleLabel.setText("-");
+        add(RoleLabel);
+        RoleLabel.setBounds(150, 200, 200, 16);
+
+        jLabel6.setText("Last Access:");
+        add(jLabel6);
+        jLabel6.setBounds(40, 230, 100, 16);
+
+        LastAccessLabel.setText("-");
+        add(LastAccessLabel);
+        LastAccessLabel.setBounds(150, 230, 300, 16);
+
+        jLabel7.setText("Last Updated:");
+        add(jLabel7);
+        jLabel7.setBounds(40, 260, 100, 16);
+
+        LastUpdatedLabel.setText("-");
+        add(LastUpdatedLabel);
+        LastUpdatedLabel.setBounds(150, 260, 300, 16);
+
+        DeleteButton.setText("Delete");
+        DeleteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DeleteButtonActionPerformed(evt);
+            }
+        });
+        add(DeleteButton);
+        DeleteButton.setBounds(480, 350, 100, 32);
     }// </editor-fold>//GEN-END:initComponents
 
     private void BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackActionPerformed
-        // TODO add your handling code here:
+        String newUsername = UsernameTextField.getText().trim();
+        String newPassword = new String(PasswordTextField.getPassword());
+
+        if (newUsername.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Username cannot be empty", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        selecteduseraccount.setUsername(newUsername);
+        
+        if (!newPassword.isEmpty()) {
+            if (newPassword.length() < 4) {
+                JOptionPane.showMessageDialog(this, "Password must be at least 4 characters", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            selecteduseraccount.setPassword(newPassword);
+        }
+
+        JOptionPane.showMessageDialog(this, "User account updated successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
 
         CardSequencePanel.remove(this);
         ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
@@ -80,18 +182,39 @@ public class AdminUserAccount extends javax.swing.JPanel {
     }//GEN-LAST:event_BackActionPerformed
 
     private void Back1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Back1ActionPerformed
-        // TODO add your handling code here:
          CardSequencePanel.remove(this);
         ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
 
 
     }//GEN-LAST:event_Back1ActionPerformed
 
+    private void DeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteButtonActionPerformed
+        int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this user account?", "Confirm Delete", JOptionPane.YES_NO_OPTION);
+        if (confirm == JOptionPane.YES_OPTION) {
+            JOptionPane.showMessageDialog(this, "User account deleted successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+            CardSequencePanel.remove(this);
+            ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
+        }
+    }//GEN-LAST:event_DeleteButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Back;
     private javax.swing.JButton Back1;
+    private javax.swing.JButton DeleteButton;
+    private javax.swing.JLabel LastAccessLabel;
+    private javax.swing.JLabel LastUpdatedLabel;
+    private javax.swing.JLabel NameLabel;
+    private javax.swing.JPasswordField PasswordTextField;
+    private javax.swing.JLabel RoleLabel;
+    private javax.swing.JTextField UsernameTextField;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     // End of variables declaration//GEN-END:variables
 
 }

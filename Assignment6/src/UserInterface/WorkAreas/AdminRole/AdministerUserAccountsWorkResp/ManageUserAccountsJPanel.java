@@ -37,7 +37,6 @@ public class ManageUserAccountsJPanel extends javax.swing.JPanel {
 
     public void refreshTable() {
 
-//clear supplier table
         int rc = UserAccountTable.getRowCount();
         int i;
         for (i = rc - 1; i >= 0; i--) {
@@ -54,9 +53,20 @@ public class ManageUserAccountsJPanel extends javax.swing.JPanel {
 
             Object[] row = new Object[5];
             row[0] = ua;
- //           row[1] = ua.getStatus(); //complete this..
- //           row[2] = ua.getLastUpdated()
- //           row[3] = 
+            row[1] = ua.getRole();
+            
+            java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            if (ua.getLastAccessTime() != null) {
+                row[2] = sdf.format(ua.getLastAccessTime());
+            } else {
+                row[2] = "Never";
+            }
+            
+            if (ua.getLastUpdatedTime() != null) {
+                row[3] = sdf.format(ua.getLastUpdatedTime());
+            } else {
+                row[3] = "Never";
+            }
 
             ((DefaultTableModel) UserAccountTable.getModel()).addRow(row);
         }
