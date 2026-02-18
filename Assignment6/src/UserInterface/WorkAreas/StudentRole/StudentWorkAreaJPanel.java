@@ -175,10 +175,9 @@ public class StudentWorkAreaJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton4IdentifyResourceAssetsActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        // TODO add your handling code here:
-
-
-
+        StudentProfileJPanel profilePanel = new StudentProfileJPanel(student, CardSequencePanel);
+        CardSequencePanel.add("StudentProfile", profilePanel);
+        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
 }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
