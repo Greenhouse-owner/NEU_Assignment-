@@ -11,6 +11,7 @@
 package UserInterface.WorkAreas.FacultyRole;
 
 import Business.Business;
+import Business.Profiles.FacultyProfile;
 import UserInterface.WorkAreas.AdminRole.ManagePersonnelWorkResp.ManagePersonsJPanel;
 import javax.swing.JPanel;
 
@@ -22,14 +23,16 @@ public class FacultyWorkAreaJPanel extends javax.swing.JPanel {
 
     javax.swing.JPanel CardSequencePanel;
     Business business;
+    FacultyProfile facultyProfile;
 
     /**
      * Creates new form UnitRiskWorkArea
      */
 
-    public FacultyWorkAreaJPanel(Business b, JPanel clp) {
+    public FacultyWorkAreaJPanel(Business b, FacultyProfile fp, JPanel clp) {
 
         business = b;
+        this.facultyProfile = fp;
         this.CardSequencePanel = clp;
         initComponents();
 
@@ -165,13 +168,9 @@ public class FacultyWorkAreaJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void jButton6IdentifyEventsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6IdentifyEventsActionPerformed
-        // TODO add your handling code here:
-        CardSequencePanel.removeAll();
-        //    IdentifyEventTypes iet= new IdentifyEventTypes(businessunit, CardSequencePanel);
-
-        //    CardSequencePanel.add("IdentifyEventTypes", iet);
+        FacultyProfileJPanel profilePanel = new FacultyProfileJPanel(facultyProfile, CardSequencePanel);
+        CardSequencePanel.add("FacultyProfile", profilePanel);
         ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
-        //((java.awt.CardLayout)CardSequencePanel.getLayout()).show(CardSequencePanel, "IdentifyEventTypes");
 }//GEN-LAST:event_jButton6IdentifyEventsActionPerformed
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
