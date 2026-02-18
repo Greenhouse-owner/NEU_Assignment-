@@ -11,6 +11,7 @@
 package UserInterface.WorkAreas.AdminRole;
 
 import Business.Business;
+import Business.UserAccounts.UserAccount;
 import UserInterface.WorkAreas.AdminRole.AdministerUserAccountsWorkResp.ManageUserAccountsJPanel;
 import UserInterface.WorkAreas.AdminRole.ManagePersonnelWorkResp.ManagePersonsJPanel;
 
@@ -24,14 +25,16 @@ public class AdminRoleWorkAreaJPanel extends javax.swing.JPanel {
 
     javax.swing.JPanel CardSequencePanel;
     Business business;
+    UserAccount currentUserAccount;
 
     /**
      * Creates new form UnitRiskWorkArea
      */
 
-    public AdminRoleWorkAreaJPanel(Business b, JPanel clp) {
+    public AdminRoleWorkAreaJPanel(Business b, UserAccount ua, JPanel clp) {
 
         business = b;
+        this.currentUserAccount = ua;
         this.CardSequencePanel = clp;
         initComponents();
 
@@ -180,14 +183,21 @@ public class AdminRoleWorkAreaJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        // TODO add your handling code here:
-
+        ManageStudentsJPanel manageStudentsPanel = new ManageStudentsJPanel(business, CardSequencePanel);
+        CardSequencePanel.add("ManageStudents", manageStudentsPanel);
+        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton6IdentifyEventsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6IdentifyEventsActionPerformed
+        AdminProfileJPanel profilePanel = new AdminProfileJPanel(currentUserAccount, CardSequencePanel);
+        CardSequencePanel.add("AdminProfile", profilePanel);
+        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
     }//GEN-LAST:event_jButton6IdentifyEventsActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        ManageFacultyJPanel manageFacultyPanel = new ManageFacultyJPanel(business, CardSequencePanel);
+        CardSequencePanel.add("ManageFaculty", manageFacultyPanel);
+        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
     }//GEN-LAST:event_jButton9ActionPerformed
 
 
